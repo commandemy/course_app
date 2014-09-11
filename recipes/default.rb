@@ -18,9 +18,11 @@ user "course_app" do
   action :create
 end
 
-directory "/home/course_app/public" do
-  owner 'course_app'
-  action :create
+%w[ /home/course_app /home/course_app/public].each do |path|
+  directory path do
+    owner 'course_app'
+    action :create
+  end
 end
 
 # Apache and Passenger
