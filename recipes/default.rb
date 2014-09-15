@@ -6,6 +6,8 @@
 #
 # All rights reserved - Do Not Redistribute
 #
+include_recipe "apt"
+
 include_recipe "rbenv::default"
 include_recipe "rbenv::ruby_build"
 
@@ -18,7 +20,7 @@ user "course_app" do
   action :create
 end
 
-%w[ /home/course_app /home/course_app/public].each do |path|
+%w[/home/course_app /home/course_app/blog /home/course_app/blog/public].each do |path|
   directory path do
     owner 'course_app'
     action :create
@@ -26,17 +28,18 @@ end
 end
 
 # Apache and Passenger
-# TODO: Cookbook still uses Chef Ruby all the time...
-#node.default['passenger']['ruby_bin'] = "/opt/rbenv/shims/ruby"
-#node.default['passenger']['root_path'] = "/opt/rbenv/shims/ruby/gems/2.1.1/gems/passenger-4.0.14"
+node.default['passenger']['version'] = "4.0.14"
+node.default['passenger']['ruby_bin'] = "/opt/rbenv/shims/ruby"
+node.default['passenger']['root_path'] = "/opt/rbenv/versions/2.1.1/lib/ruby/gems/2.1.0/gems/passenger-4.0.14"
+
 include_recipe "passenger_apache2"
 
 web_app "course_app" do
-  docroot "/home/course_app/public"
+  docroot "/home/course_app/blog/public"
   server_name "course_app"
   server_aliases [ "course_app", node[:hostname] ]
 end
 
-# Gems
-gem_package "bundler"
-gem_package "sinatra"
+# Gems (using rbenv cookbook LWRP)
+rbenv_gem "bundler"
+rbenv_gem "sinatra"
