@@ -1,6 +1,6 @@
 name             'course_app'
-maintainer       'YOUR_NAME'
-maintainer_email 'YOUR_EMAIL'
+maintainer       'Edmund Haselwanter'
+maintainer_email 'ehaselwanter@iteh.at'
 license          'All rights reserved'
 description      'Installs/Configures course_app'
 long_description 'Installs/Configures course_app'
