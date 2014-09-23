@@ -12,7 +12,7 @@ driver:
   key_name: name_of_keypair
 
 provisioner:
-  name: chef_solo
+  name: chef_zero
 
 platforms:
   - name: ubuntu-12.04
