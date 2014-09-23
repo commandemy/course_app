@@ -2,10 +2,10 @@
 # Cookbook Name:: course_app
 # Recipe:: default
 #
-# Copyright (C) 2014 YOUR_NAME
+# Copyright (C) 2014 Edmund Haselwanter
 #
-# All rights reserved - Do Not Redistribute
 #
+
 include_recipe "apt"
 
 include_recipe "rbenv::default"
@@ -37,7 +37,7 @@ include_recipe "passenger_apache2"
 web_app "course_app" do
   docroot "/home/course_app/blog/public"
   server_name "course_app"
-  server_aliases [ "course_app", node[:hostname] ]
+  server_aliases [ "course_app", node['hostname'] ]
 end
 
 # Gems (using rbenv cookbook LWRP)
