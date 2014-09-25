@@ -7,7 +7,7 @@
 #
 include_recipe "apt"
 
-# 1 Install Ruby
+# 1 Install Ruby and Bundler
 include_recipe "rbenv::default"
 include_recipe "rbenv::ruby_build"
 
@@ -15,10 +15,12 @@ rbenv_ruby "2.1.1" do
   global true
 end
 
-template "/etc/environment" do
-  source "environment"
+template "/etc/profile" do
+  source "profile"
   action :create
 end
+
+rbenv_gem "bundler"
 
 # Create folder for app
 %w[/home/course_app /home/course_app/blog /home/course_app/blog/public].each do |path|

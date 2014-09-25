@@ -4,7 +4,7 @@ maintainer_email 'ehaselwanter@iteh.at'
 license          'All rights reserved'
 description      'Installs/Configures course_app'
 long_description 'Installs/Configures course_app'
-version          '0.1.3'
+version          '0.1.10'
 
 depends 'apt'
 depends 'rbenv'

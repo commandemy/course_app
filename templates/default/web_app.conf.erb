@@ -4,5 +4,6 @@
     <Directory <%= @params[:docroot] %>>
         Allow from all
         Options -MultiViews
+        Order allow,deny
     </Directory>
 </VirtualHost>
