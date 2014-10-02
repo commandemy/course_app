@@ -9,4 +9,5 @@ version          '0.1.10'
 depends 'apt'
 depends 'rbenv'
 depends 'passenger_apache2'
+depends 'artifact' #new
 

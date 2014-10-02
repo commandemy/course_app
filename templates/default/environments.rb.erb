@@ -1,0 +1,4 @@
+configure :production, :development do
+  set :database, {adapter: "mysql", database: "<%= @prod_database[:database] %>", username:"<%= @prod_database[:username] %>", password:"<%= @prod_database[:password] %>", host:"<%= @prod_database[:host] %>" }
+  set :show_exceptions, true
+end
