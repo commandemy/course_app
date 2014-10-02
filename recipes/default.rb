@@ -23,12 +23,12 @@ end
 rbenv_gem "bundler"
 
 # Create folder for app
-%w[/home/course_app /home/course_app/blog /home/course_app/blog/public].each do |path|
-  directory path do
-    owner 'ubuntu'
-    action :create
-  end
-end
+#%w[/home/course_app /home/course_app/blog].each do |path|
+#  directory path do
+#    owner 'ubuntu'
+#    action :create
+#  end
+#end
 
 # Apache and Passenger
 node.default['passenger']['version'] = "4.0.14"
@@ -38,35 +38,43 @@ node.default['passenger']['root_path'] = "/opt/rbenv/versions/2.1.1/lib/ruby/gem
 include_recipe "passenger_apache2"
 
 web_app "course_app" do
-  docroot "/home/course_app/blog/current/public" #new
+  docroot "/var/www/current/public" #new
   server_name "course_app"
   server_aliases [ "course_app", node['hostname'] ]
 end
 
-# Artifact Deploy (all below is new)
-# http://10.11.12.2:8080/job/blog-app-artifact-deploy/lastSuccessfulBuild/artifact/blog.tar
+# Make Ubuntu the Apache User #new
+#template "/etc/apache2/envvars" do
+#  source "envvars"
+#end
+
+# Artifact Deploy
+
 database_hosts = []
 search(:node, "role:#{node['course_roles']['database_server']}").each do |n|
   database_hosts << n['ipaddress']
 end
 
-#TODO: Search for Jenkins Host
+jenkins_hosts = []
+search(:node, "role:#{node['course_roles']['jenkins_server']}").each do |n|
+  jenkins_hosts << n['ipaddress']
+end
 
 artifact_deploy "blog" do
   version "1.0.0"
-  artifact_location "http://10.11.12.2:8080/job/blog-app-artifact-deploy/lastSuccessfulBuild/artifact/blog.tar"
-  deploy_to "/home/course_app/blog"
-  owner "ubuntu"
-  group "ubuntu"
+  artifact_location "http://#{jenkins_hosts.first}:8080/job/blog-app-artifact-deploy/lastSuccessfulBuild/artifact/blog.tar"
+  deploy_to "/var/www/"
+  owner "www-data"
+  group "www-data"
 
   before_migrate Proc.new {
-    execute "sudo chown -R www-data /home/course_app"
-    execute "sudo rm /home/course_app/blog/current/environments.rb"
 
-    template "/home/course_app/blog/current/environments.rb" do
+    execute "sudo rm #{release_path}/environments.rb"
+
+    template "#{release_path}/environments.rb" do
       source "environments.rb.erb"
-      owner "ubuntu"
-      group "ubuntu"
+      owner "www-data"
+      group "www-data"
       mode "0644"
       variables ({
         prod_database: {
@@ -78,17 +86,14 @@ artifact_deploy "blog" do
       })
     end
 
-    execute "bundle install --local --path=vendor/bundle --without test development cucumber --binstubs" do
-      user "ubuntu"
-      group "ubuntu"
+    rbenv_execute "bundle install" do
+      cwd release_path
     end
   }
 
   migrate Proc.new {
-    execute "bundle exec rake db:migrate RACK_ENV=production" do
+    rbenv_execute "bundle exec rake db:migrate RACK_ENV=production" do
       cwd release_path
-      user "ubuntu"
-      group "ubuntu"
     end
   }
 
@@ -99,5 +104,7 @@ artifact_deploy "blog" do
   }
 
   keep 2
+  should_migrate (node[:pvpnet][:should_migrate] ? true : false)
+  force (node[:pvpnet][:force_deploy] ? true : false)
   action :deploy
 end
