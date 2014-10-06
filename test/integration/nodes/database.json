@@ -3,7 +3,7 @@
   "run_list": ["role[database_server]"],
   "automatic": {
     "fqdn": "database",
-    "ipaddress": "10.11.12.6",
+    "ipaddress": "10.11.12.110",
     "role": ["database_server"]
   }
 }

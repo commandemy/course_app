@@ -22,14 +22,6 @@ end
 
 rbenv_gem "bundler"
 
-# Create folder for app
-#%w[/home/course_app /home/course_app/blog].each do |path|
-#  directory path do
-#    owner 'ubuntu'
-#    action :create
-#  end
-#end
-
 # Apache and Passenger
 node.default['passenger']['version'] = "4.0.14"
 node.default['passenger']['ruby_bin'] = "/opt/rbenv/shims/ruby"

@@ -3,7 +3,7 @@
   "run_list": ["role[jenkins_server]"],
   "automatic": {
     "fqdn": "database",
-    "ipaddress": "10.11.12.3",
+    "ipaddress": "10.11.12.120",
     "role": ["database_server"]
   }
 }
