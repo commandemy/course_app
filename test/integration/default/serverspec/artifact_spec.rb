@@ -1,4 +1,7 @@
-require 'spec_helper'
+require 'serverspec'
+
+# Required by serverspec
+set :backend, :exec
 
 describe 'Artifact' do
 
