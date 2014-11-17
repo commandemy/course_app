@@ -7,6 +7,7 @@
 #
 
 # Create folder for app
+
 %w[/home/course_app /home/course_app/blog /home/course_app/blog/public].each do |path|
   directory path do
     owner 'ubuntu'

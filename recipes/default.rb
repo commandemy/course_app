@@ -30,4 +30,4 @@ node.default['passenger']['root_path'] = "/opt/rbenv/versions/2.1.1/lib/ruby/gem
 include_recipe "passenger_apache2"
 
 # Choose build style
-include_recipe "course_app::#{node.default['build_style']}_build"
+include_recipe "course_app::#{node['course_app']['build_style']}_build"

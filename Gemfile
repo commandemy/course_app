@@ -18,3 +18,5 @@ gem 'test-kitchen'
 gem 'kitchen-vagrant'
 gem 'kitchen-openstack'
 gem 'serverspec'
+
+gem 'chefspec', '~> 4.1.1'

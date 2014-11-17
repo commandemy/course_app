@@ -2,7 +2,7 @@
   "id": "database",
   "run_list": ["role[jenkins_server]"],
   "automatic": {
-    "fqdn": "database",
+    "fqdn": "jenkins",
     "ipaddress": "10.11.12.120",
     "role": ["database_server"]
   }

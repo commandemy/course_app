@@ -1,2 +1,2 @@
-default['build_style'] = "artifact"
-#default['build_style'] = "ssh"
+#default['course_app']['build_style'] = "artifact"
+default['course_app']['build_style'] = "ssh"
