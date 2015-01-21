@@ -1,15 +1,21 @@
 ---
 driver:
   name: openstack
-  openstack_username: admin
-  openstack_api_key: password
-  openstack_auth_url: http://192.168.1.4:5000/v2.0/tokens
+  openstack_username: dmtrain
+  openstack_api_key: secrete
+  openstack_auth_url: http://10.1.204.11:5000/v2.0/tokens
   require_chef_omnibus: latest
-  image_ref: 35b0aeed-1d5d-4ca7-8237-bf5a0144c6e6
-  flavor_ref: 3
-  tenant_name: admin
+  image_ref: Ubuntu1204
+  flavor_ref: m1.course
+  tenant_name: demo
   username: ubuntu
-  key_name: mykey
+  key_name: course_key
+  floating_ip_pool: public
+  network_ref: private_course
+
+driver_config:
+  http_proxy: http://172.22.236.11:3128
+  https_proxy: http://172.22.236.11:3128
 
 provisioner:
   name: chef_zero
