@@ -3,6 +3,9 @@
 
 export PATH=/opt/rebnv/shims:/opt/rbenv/bin:/opt/rbenv/plugins/ruby_build/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$PATH
 
+export http_proxy=http://10.1.204.2:3128
+export https_proxy=http://10.1.204.2:3128
+
 if [ "$PS1" ]; then
   if [ "$BASH" ] && [ "$BASH" != "/bin/sh" ]; then
     # The file bash.bashrc already sets the default PS1.
