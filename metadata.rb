@@ -6,8 +6,7 @@ description      'Installs/Configures course_app'
 long_description 'Installs/Configures course_app'
 version          '0.1.13'
 
-depends 'apt'
-depends 'rbenv'
-depends 'passenger_apache2'
-depends 'artifact'
-
+depends 'apt', '2.6.0'
+depends 'rbenv', '1.7.1'
+depends 'passenger_apache2', '2.2.2'
+depends 'artifact', '1.12.2'
